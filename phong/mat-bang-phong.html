@@ -1,0 +1,239 @@
+<title>Mặt bằng phòng 4,13 × 3,65 m</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: bản vẽ kỹ thuật một cột — tiêu đề kiểu khung tên, bản vẽ lớn, bảng số đo bên dưới */
+:root {
+  --paper: #f3f5f4;
+  --sheet: #fbfcfb;
+  --ink: #1d2a33;
+  --muted: #5d6b74;
+  --line: #c9d2d6;
+  --accent: #2b6a86;
+  --wall: #2a3640;
+  --vinyl: #e7dccb;
+  --bare: #d9d3cb;
+  --rot: #b9826a;
+  --mat: #4f8fb3;
+  --cut: #d07a8f;
+  --furn: #ffffff;
+  --font-display: "Be Vietnam Pro", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Be Vietnam Pro", "Segoe UI", system-ui, sans-serif;
+  --font-data: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11171c; --sheet: #172028; --ink: #dce5ea; --muted: #93a2ab; --line: #2e3b45;
+    --accent: #7cbad6; --wall: #c8d3da; --vinyl: #4a4136; --bare: #3a3733; --rot: #7a4a38;
+    --mat: #5ea3c8; --cut: #c96a82; --furn: #223039; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #11171c; --sheet: #172028; --ink: #dce5ea; --muted: #93a2ab; --line: #2e3b45;
+  --accent: #7cbad6; --wall: #c8d3da; --vinyl: #4a4136; --bare: #3a3733; --rot: #7a4a38;
+  --mat: #5ea3c8; --cut: #c96a82; --furn: #223039; color-scheme: dark;
+}
+body {
+  background: var(--paper); color: var(--ink); font-family: var(--font-body); line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 48px;
+}
+main { max-width: 980px; margin: 0 auto; display: grid; gap: 24px; }
+header { display: grid; gap: 6px; }
+.eyebrow { font-family: var(--font-data); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 4vw, 34px); line-height: 1.2; margin: 0; text-wrap: balance; }
+h2 { font-size: 17px; margin: 0; }
+.lede { color: var(--muted); margin: 0; max-width: 65ch; }
+.sheet { background: var(--sheet); border: 1px solid var(--line); border-radius: 6px; padding: 16px; display: grid; gap: 14px; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; }
+.controls label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.controls input { accent-color: var(--accent); width: 16px; height: 16px; }
+.drawing { overflow-x: auto; }
+svg { display: block; width: 100%; min-width: 520px; height: auto; }
+svg text { font-family: var(--font-data); fill: var(--ink); }
+.dim { stroke: var(--accent); stroke-width: 1; fill: none; }
+.dimtext { fill: var(--accent); font-size: 13px; font-weight: 600; }
+.lbl { font-size: 9px; fill: var(--ink); font-family: var(--font-body); }
+.lbl-s { font-size: 7.5px; fill: var(--muted); font-family: var(--font-body); }
+.furn { fill: var(--furn); stroke: var(--ink); stroke-width: 1; }
+.est { stroke-dasharray: 4 3; }
+#layer-mats line { stroke: var(--mat); stroke-width: .9; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 14px; height: 14px; border: 1px solid var(--line); border-radius: 2px; display: inline-block; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+.grid2 > * { min-width: 0; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 7px 4px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 500; color: var(--muted); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+td.num { font-family: var(--font-data); font-variant-numeric: tabular-nums; white-space: nowrap; }
+ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+.note { color: var(--muted); font-size: 13px; }
+</style>
+
+<main>
+  <header>
+    <div class="eyebrow">Mặt bằng · tỉ lệ đúng · đơn vị cm</div>
+    <h1>Mặt bằng phòng 4,13 × 3,65 m</h1>
+    <p class="lede">Vẽ lại từ ảnh và video đo bằng thước dây. Kích thước tường là số đo thật; vị trí cửa, quạt, bàn máy tính và đồ đạc là ước lượng từ ảnh (nét đứt).</p>
+  </header>
+
+  <section class="sheet" aria-label="Bản vẽ mặt bằng">
+    <div class="controls">
+      <label><input type="checkbox" id="t-floor" checked> Tình trạng sàn</label>
+      <label><input type="checkbox" id="t-furn" checked> Đồ đạc</label>
+      <label><input type="checkbox" id="t-mats"> Lưới thảm xốp 60×60</label>
+    </div>
+
+    <div class="drawing">
+    <svg viewBox="-78 -78 575 525" role="img" aria-label="Mặt bằng phòng dài 413 cm, rộng 365 cm">
+      <defs>
+        <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <rect width="8" height="8" fill="var(--rot)" opacity=".35"/>
+          <line x1="0" y1="0" x2="0" y2="8" stroke="var(--rot)" stroke-width="2.4"/>
+        </pattern>
+        <marker id="tick" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+          <line x1="1" y1="9" x2="9" y2="1" stroke="var(--accent)" stroke-width="1.6"/>
+        </marker>
+      </defs>
+
+      <!-- Tường (dày minh hoạ 10 cm, phía ngoài lòng phòng) -->
+      <rect x="-10" y="-10" width="433" height="385" fill="var(--wall)"/>
+      <!-- Sàn: lòng phòng 413 × 365 -->
+      <rect x="0" y="0" width="413" height="365" fill="var(--vinyl)"/>
+
+      <!-- Tình trạng sàn -->
+      <g id="layer-floor">
+        <rect x="0" y="0" width="413" height="115" fill="var(--bare)"/>
+        <rect x="0" y="0" width="150" height="130" fill="url(#hatch)"/>
+        <text class="lbl-s" x="160" y="58">nền trần, loang lổ vữa / ẩm</text>
+        <text class="lbl-s" x="10" y="120">sàn gỗ mục, bong ván</text>
+        <text class="lbl-s" x="160" y="140">sàn nhựa vân gỗ</text>
+      </g>
+
+      <!-- Lưới thảm 60 × 60 -->
+      <g id="layer-mats" hidden>
+        <rect x="360" y="0" width="53" height="365" fill="var(--cut)" opacity=".22"/>
+        <rect x="0" y="360" width="413" height="5" fill="var(--cut)" opacity=".5"/>
+        <line x1="60" y1="0" x2="60" y2="365"/><line x1="120" y1="0" x2="120" y2="365"/>
+        <line x1="180" y1="0" x2="180" y2="365"/><line x1="240" y1="0" x2="240" y2="365"/>
+        <line x1="300" y1="0" x2="300" y2="365"/><line x1="360" y1="0" x2="360" y2="365"/>
+        <line x1="0" y1="60" x2="413" y2="60"/><line x1="0" y1="120" x2="413" y2="120"/>
+        <line x1="0" y1="180" x2="413" y2="180"/><line x1="0" y1="240" x2="413" y2="240"/>
+        <line x1="0" y1="300" x2="413" y2="300"/><line x1="0" y1="360" x2="413" y2="360"/>
+        <text class="lbl-s" x="364" y="200" transform="rotate(-90 386 190)">cắt còn 53 cm</text>
+      </g>
+
+      <!-- Cửa sổ + điều hoà trên tường trái -->
+      <rect x="300" y="-10" width="90" height="10" fill="var(--sheet)" stroke="var(--ink)" stroke-width=".8"/>
+      <line x1="300" y1="-5" x2="390" y2="-5" stroke="var(--ink)" stroke-width=".8"/>
+      <text class="lbl-s" x="300" y="-16">cửa sổ + điều hoà (trên cao)</text>
+
+      <!-- Cửa ra sân thượng (tường cuối) -->
+      <rect x="413" y="150" width="10" height="80" fill="var(--vinyl)"/>
+      <line x1="413" y1="150" x2="333" y2="150" stroke="var(--ink)" stroke-width="1.6" class="est"/>
+      <path d="M333,150 A80,80 0 0 0 413,230" fill="none" stroke="var(--ink)" stroke-width=".8" class="est"/>
+      <text class="lbl" x="430" y="186">ra sân</text>
+      <text class="lbl" x="430" y="198">thượng</text>
+      <text class="lbl-s" x="430" y="210">~80 cm</text>
+
+      <!-- Cửa ra vào (tường đầu) -->
+      <rect x="-10" y="235" width="10" height="80" fill="var(--vinyl)"/>
+      <line x1="0" y1="315" x2="80" y2="315" stroke="var(--ink)" stroke-width="1.6" class="est"/>
+      <path d="M80,315 A80,80 0 0 1 0,235" fill="none" stroke="var(--ink)" stroke-width=".8" class="est"/>
+      <text class="lbl" x="-70" y="272">cửa vào</text>
+      <text class="lbl-s" x="-70" y="284">~80 cm</text>
+
+      <!-- Đồ đạc (vị trí ước lượng) -->
+      <g id="layer-furn">
+        <circle cx="385" cy="30" r="18" class="furn est"/>
+        <circle cx="385" cy="30" r="4" fill="var(--ink)"/>
+        <text class="lbl" x="352" y="64">quạt cây</text>
+
+        <rect x="300" y="305" width="110" height="57" class="furn est"/>
+        <rect x="322" y="346" width="66" height="6" fill="var(--ink)"/>
+        <rect x="392" y="328" width="16" height="32" fill="none" stroke="var(--ink)" stroke-width=".8"/>
+        <text class="lbl" x="306" y="322">bàn máy tính</text>
+        <text class="lbl-s" x="306" y="333">~110 × 57</text>
+
+        <rect x="332" y="252" width="44" height="44" rx="6" class="furn est"/>
+        <text class="lbl-s" x="343" y="277">ghế</text>
+
+        <rect x="215" y="318" width="70" height="44" class="furn est"/>
+        <text class="lbl-s" x="221" y="336">thanh inox,</text>
+        <text class="lbl-s" x="221" y="346">thùng đồ</text>
+
+        <rect x="3" y="140" width="45" height="90" class="furn est"/>
+        <text class="lbl-s" x="7" y="180">tủ nhựa,</text>
+        <text class="lbl-s" x="7" y="190">thùng</text>
+      </g>
+
+      <!-- Kích thước: chiều dọc -->
+      <line x1="0" y1="-48" x2="413" y2="-48" class="dim" marker-start="url(#tick)" marker-end="url(#tick)"/>
+      <line x1="0" y1="-58" x2="0" y2="-14" class="dim"/>
+      <line x1="413" y1="-58" x2="413" y2="-14" class="dim"/>
+      <text class="dimtext" x="206.5" y="-54" text-anchor="middle">413</text>
+
+      <!-- Kích thước: chiều ngang -->
+      <line x1="-48" y1="0" x2="-48" y2="365" class="dim" marker-start="url(#tick)" marker-end="url(#tick)"/>
+      <line x1="-58" y1="0" x2="-14" y2="0" class="dim"/>
+      <line x1="-58" y1="365" x2="-14" y2="365" class="dim"/>
+      <text class="dimtext" x="-54" y="182.5" text-anchor="middle" transform="rotate(-90 -54 182.5)">365</text>
+
+      <!-- Thước tỉ lệ -->
+      <g transform="translate(0 405)">
+        <rect x="0" y="0" width="50" height="5" fill="var(--ink)"/>
+        <rect x="50" y="0" width="50" height="5" fill="var(--sheet)" stroke="var(--ink)" stroke-width=".8"/>
+        <text class="lbl-s" x="0" y="17">0</text>
+        <text class="lbl-s" x="44" y="17">50</text>
+        <text class="lbl-s" x="90" y="17">100 cm</text>
+        <text class="lbl-s" x="250" y="12">diện tích sàn ≈ 15,07 m²</text>
+      </g>
+    </svg>
+    </div>
+
+    <div class="legend">
+      <span><i class="sw" style="background:var(--vinyl)"></i>Sàn nhựa vân gỗ</span>
+      <span><i class="sw" style="background:var(--bare)"></i>Nền trần</span>
+      <span><i class="sw" style="background:var(--rot)"></i>Sàn gỗ mục</span>
+      <span><i class="sw" style="background:var(--cut);opacity:.6"></i>Tấm thảm phải cắt</span>
+    </div>
+  </section>
+
+  <section class="grid2">
+    <div class="sheet">
+      <h2>Số đo</h2>
+      <table>
+        <thead><tr><th>Hạng mục</th><th>Số đo</th><th>Nguồn</th></tr></thead>
+        <tbody>
+          <tr><td>Chiều dọc</td><td class="num">413 cm</td><td>video đo, thước dừng ở vạch 410–413</td></tr>
+          <tr><td>Chiều ngang</td><td class="num">365 cm</td><td>video đo, thước dừng ở vạch 364–365</td></tr>
+          <tr><td>Diện tích</td><td class="num">15,07 m²</td><td>4,13 × 3,65</td></tr>
+          <tr><td>Chu vi</td><td class="num">15,56 m</td><td>tính ra, dùng cho nẹp chân tường</td></tr>
+          <tr><td>Cửa</td><td class="num">~80 cm</td><td>ước lượng, cần đo lại</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sheet">
+      <h2>Thảm xốp 60 × 60</h2>
+      <ul>
+        <li>Chiều dọc: 6 tấm nguyên + 1 tấm cắt còn 53 cm.</li>
+        <li>Chiều ngang: 6 tấm nguyên + dải 5 cm sát tường.</li>
+        <li>Tổng: 36 tấm nguyên + 13 tấm cắt = <b>49 tấm</b>, nên mua 52.</li>
+        <li>Dải 5 cm có thể bỏ trống hoặc dùng viền thảm thay vì cắt tấm.</li>
+      </ul>
+      <p class="note">Bật "Lưới thảm xốp 60×60" ở trên để xem cách xếp.</p>
+    </div>
+  </section>
+
+  <p class="note">Cần đo thêm để bản vẽ chính xác hơn: khoảng cách từ góc phòng tới mép mỗi cửa, bề rộng cửa sổ, kích thước bàn và tủ.</p>
+</main>
+
+<script>
+  [["t-floor", "layer-floor"], ["t-furn", "layer-furn"], ["t-mats", "layer-mats"]].forEach(([c, g]) => {
+    const box = document.getElementById(c), layer = document.getElementById(g);
+    const sync = () => { layer.toggleAttribute("hidden", !box.checked); };
+    box.addEventListener("change", sync); sync();
+  });
+</script>
