@@ -17,6 +17,7 @@
   --mat: #4f8fb3;
   --cut: #d07a8f;
   --furn: #ffffff;
+  --steel: #6f7c86;
   --font-display: "Be Vietnam Pro", "Segoe UI", system-ui, sans-serif;
   --font-body: "Be Vietnam Pro", "Segoe UI", system-ui, sans-serif;
   --font-data: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -25,13 +26,13 @@
   :root:not([data-theme="light"]) {
     --paper: #11171c; --sheet: #172028; --ink: #dce5ea; --muted: #93a2ab; --line: #2e3b45;
     --accent: #7cbad6; --wall: #c8d3da; --vinyl: #4a4136; --bare: #3a3733; --rot: #7a4a38;
-    --mat: #5ea3c8; --cut: #c96a82; --furn: #223039; color-scheme: dark;
+    --mat: #5ea3c8; --cut: #c96a82; --furn: #223039; --steel: #9aa8b2; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --paper: #11171c; --sheet: #172028; --ink: #dce5ea; --muted: #93a2ab; --line: #2e3b45;
   --accent: #7cbad6; --wall: #c8d3da; --vinyl: #4a4136; --bare: #3a3733; --rot: #7a4a38;
-  --mat: #5ea3c8; --cut: #c96a82; --furn: #223039; color-scheme: dark;
+  --mat: #5ea3c8; --cut: #c96a82; --furn: #223039; --steel: #9aa8b2; color-scheme: dark;
 }
 body {
   background: var(--paper); color: var(--ink); font-family: var(--font-body); line-height: 1.55;
@@ -83,6 +84,7 @@ ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
     <div class="controls">
       <label><input type="checkbox" id="t-floor" checked> Tình trạng sàn</label>
       <label><input type="checkbox" id="t-furn" checked> Đồ đạc</label>
+      <label><input type="checkbox" id="t-frame" checked> Khung sắt hộp 4×8</label>
       <label><input type="checkbox" id="t-mats"> Lưới thảm xốp 60×60</label>
     </div>
 
@@ -123,6 +125,17 @@ ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
         <line x1="0" y1="180" x2="413" y2="180"/><line x1="0" y1="240" x2="413" y2="240"/>
         <line x1="0" y1="300" x2="413" y2="300"/><line x1="0" y1="360" x2="413" y2="360"/>
         <text class="lbl-s" x="364" y="200" transform="rotate(-90 386 190)">cắt còn 53 cm</text>
+      </g>
+
+      <!-- Khung sắt hộp 40×80, hở 70 cm (hướng thanh là giả định: bắc qua chiều ngang 365) -->
+      <g id="layer-frame" fill="var(--steel)" opacity=".85">
+        <rect x="0" y="0" width="4" height="365"/>
+        <rect x="74" y="0" width="4" height="365"/>
+        <rect x="148" y="0" width="4" height="365"/>
+        <rect x="222" y="0" width="4" height="365"/>
+        <rect x="296" y="0" width="4" height="365"/>
+        <rect x="370" y="0" width="4" height="365"/>
+        <rect x="409" y="0" width="4" height="365"/>
       </g>
 
       <!-- Cửa sổ + điều hoà trên tường trái -->
@@ -197,8 +210,43 @@ ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
       <span><i class="sw" style="background:var(--vinyl)"></i>Sàn nhựa vân gỗ</span>
       <span><i class="sw" style="background:var(--bare)"></i>Nền trần</span>
       <span><i class="sw" style="background:var(--rot)"></i>Sàn gỗ mục</span>
+      <span><i class="sw" style="background:var(--steel)"></i>Sắt hộp 4×8</span>
       <span><i class="sw" style="background:var(--cut);opacity:.6"></i>Tấm thảm phải cắt</span>
     </div>
+  </section>
+
+  <section class="sheet" aria-label="Mặt cắt khung sắt">
+    <h2>Mặt cắt A–A · khung sắt hộp</h2>
+    <div class="drawing">
+    <svg viewBox="-24 -46 461 112" role="img" aria-label="Mặt cắt dọc phòng: sắt hộp 4 x 8 cm, khoảng hở 70 cm">
+      <!-- tường hai đầu -->
+      <rect x="-10" y="-30" width="10" height="70" fill="var(--wall)"/>
+      <rect x="413" y="-30" width="10" height="70" fill="var(--wall)"/>
+      <!-- lớp ván phủ (độ dày ước lượng 2 cm) -->
+      <rect x="0" y="-2" width="413" height="2" fill="var(--rot)" opacity=".7"/>
+      <!-- sắt hộp 4 rộng × 8 cao -->
+      <g fill="var(--steel)" stroke="var(--ink)" stroke-width=".4">
+        <rect x="0" y="0" width="4" height="8"/><rect x="74" y="0" width="4" height="8"/>
+        <rect x="148" y="0" width="4" height="8"/><rect x="222" y="0" width="4" height="8"/>
+        <rect x="296" y="0" width="4" height="8"/><rect x="370" y="0" width="4" height="8"/>
+        <rect x="409" y="0" width="4" height="8"/>
+      </g>
+      <!-- kích thước khoảng hở -->
+      <g class="dim" stroke-width=".6">
+        <line x1="4" y1="22" x2="74" y2="22"/><line x1="4" y1="12" x2="4" y2="26"/><line x1="74" y1="12" x2="74" y2="26"/>
+        <line x1="374" y1="22" x2="409" y2="22"/><line x1="374" y1="12" x2="374" y2="26"/><line x1="409" y1="12" x2="409" y2="26"/>
+        <line x1="0" y1="-20" x2="413" y2="-20"/><line x1="0" y1="-26" x2="0" y2="-14"/><line x1="413" y1="-26" x2="413" y2="-14"/>
+      </g>
+      <text class="dimtext" x="39" y="36" text-anchor="middle" style="font-size:8px">70</text>
+      <text class="dimtext" x="391.5" y="36" text-anchor="middle" style="font-size:8px">35?</text>
+      <text class="dimtext" x="206.5" y="-24" text-anchor="middle" style="font-size:8px">413</text>
+      <!-- chú thích tiết diện -->
+      <line x1="150" y1="4" x2="170" y2="48" stroke="var(--ink)" stroke-width=".4"/>
+      <text class="lbl-s" x="173" y="51" style="font-size:6.5px">sắt hộp rộng 4 cm × cao 8 cm</text>
+      <text class="lbl-s" x="80" y="-6" style="font-size:6.5px">ván phủ (dày ước lượng)</text>
+    </svg>
+    </div>
+    <p class="note">Số đo thật: sắt hộp 4 × 8 cm, hở 70 cm giữa 2 thanh, tức tim cách tim 74 cm. Giả định trên bản vẽ: thanh bắc qua chiều ngang 365 cm, thanh đầu sát tường, nên chiều dài 413 cm chứa 7 thanh và khoảng cuối chỉ còn ~35 cm. Ô cuối cần đo lại.</p>
   </section>
 
   <section class="grid2">
@@ -211,6 +259,8 @@ ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
           <tr><td>Chiều ngang</td><td class="num">365 cm</td><td>video đo, thước dừng ở vạch 364–365</td></tr>
           <tr><td>Diện tích</td><td class="num">15,07 m²</td><td>4,13 × 3,65</td></tr>
           <tr><td>Chu vi</td><td class="num">15,56 m</td><td>tính ra, dùng cho nẹp chân tường</td></tr>
+          <tr><td>Sắt hộp</td><td class="num">4 × 8 cm</td><td>bạn đo</td></tr>
+          <tr><td>Hở giữa 2 thanh</td><td class="num">70 cm</td><td>bạn đo; tim–tim 74 cm</td></tr>
           <tr><td>Cửa</td><td class="num">~80 cm</td><td>ước lượng, cần đo lại</td></tr>
         </tbody>
       </table>
@@ -231,7 +281,7 @@ ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
 </main>
 
 <script>
-  [["t-floor", "layer-floor"], ["t-furn", "layer-furn"], ["t-mats", "layer-mats"]].forEach(([c, g]) => {
+  [["t-floor", "layer-floor"], ["t-frame", "layer-frame"],["t-furn", "layer-furn"], ["t-mats", "layer-mats"]].forEach(([c, g]) => {
     const box = document.getElementById(c), layer = document.getElementById(g);
     const sync = () => { layer.toggleAttribute("hidden", !box.checked); };
     box.addEventListener("change", sync); sync();
