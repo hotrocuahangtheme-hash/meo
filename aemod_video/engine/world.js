@@ -307,7 +307,7 @@ export function makeSmoke(frame, tops, opts = {}) {
 export function makeColumns(frame, data, opts = {}) {
   const { cols, cellDeg } = data;
   const g = new THREE.BoxGeometry(1, 1, 1); g.translate(0, 0, 0.5);
-  const mat = new THREE.MeshStandardMaterial({ roughness: 0.55, metalness: 0.05, transparent: true, opacity: 0.88 });
+  const mat = new THREE.MeshStandardMaterial({ roughness: 0.55, metalness: 0.05, transparent: true, opacity: 0.88, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -8 });
   const mesh = new THREE.InstancedMesh(g, mat, cols.length);
   mesh.frustumCulled = false;
   const cellX = cellDeg * 111320 * Math.cos(frame.lat0 * Math.PI / 180) * 0.92, cellY = cellDeg * 110540 * 0.92;
@@ -322,8 +322,9 @@ export function makeColumns(frame, data, opts = {}) {
         const delay = (1 - c.t) * 0.5;               // tall columns rise first
         const gi = Math.max(0, Math.min(1, (grow - delay) / 0.5));
         const e = gi * gi * (3 - 2 * gi);
-        const hgt = Math.max(0.01, c.t * maxH * exag * e);
-        m.makeScale(cellX, cellY, hgt); m.setPosition(base[i].x, base[i].y, base[i].z);
+        const hgt = c.t * maxH * exag * e;
+        if (hgt < 50) m.makeScale(0, 0, 0); else m.makeScale(cellX, cellY, hgt);
+        m.setPosition(base[i].x, base[i].y, base[i].z + 2);
         mesh.setMatrixAt(i, m);
       });
       mesh.instanceMatrix.needsUpdate = true;
