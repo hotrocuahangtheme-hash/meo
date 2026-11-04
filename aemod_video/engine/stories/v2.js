@@ -24,9 +24,9 @@ export async function setup(ctx) {
   const ovB = await overlayFor(ctx, cB, 'NO2', '1h_max', { up: 3 });
   const ovAabs = await overlayFor(ctx, cA, 'NO2', '1h_max', { up: 3, scale: 'abs' });
   const ovAabsS = await overlayFor(ctx, cA, 'NO2', '1h_max', { up: 3, scale: 'abs', fill: 'smooth' });
+  const ovSO2 = await overlayFor(ctx, cA, 'SO2', '1h_max', { up: 3 });
+  const ovTSP = await overlayFor(ctx, cA, 'TSP', '1h_max', { up: 3 });
   const LA = ovA.layer;
-  const colData = D.buildColumnsData(cA.grid, ovA.vals, LA, v => D.ramp(D.QC_RAMP, (v / 200) / 2));
-  const cols = ctx.W.makeColumns(T.frame, colData, {});
 
   // browser windows with real app screenshots (left panel hidden)
   scene.add(camera);
@@ -51,12 +51,13 @@ export async function setup(ctx) {
     { t: 34, lon: 105.745, lat: 10.31, hd: 38, p: -33, r: 2.0e4 },
     { t: 37.5, lon: 105.7525, lat: 10.3285, th: 12, hd: 52, p: -19, r: 3200, rv: 1.1 },
     { t: 40.5, lon: 105.752, lat: 10.33, hd: 40, p: -32, r: 9500 },
-    { t: 44, lon: 105.70, lat: 10.40, hd: 0, p: -55, r: 4.6e4 },
-    { t: 55, lon: 105.70, lat: 10.39, hd: 352, p: -56, r: 4.8e4 },
+    { t: 44, lon: 105.754, lat: 10.334, hd: 0, p: -58, r: 3.3e4 },
+    { t: 55, lon: 105.752, lat: 10.334, hd: 354, p: -60, r: 3.5e4 },
     { t: 58.5, lon: 105.73, lat: 10.38, hd: 340, p: -50, r: 4.6e4 },
     { t: 71, lon: 105.72, lat: 10.39, hd: 312, p: -48, r: 4.4e4 },
-    { t: 76, lon: 105.73, lat: 10.35, hd: 285, p: -25, r: 3.7e4 },
-    { t: 85, lon: 105.74, lat: 10.34, hd: 245, p: -20, r: 3.4e4 },
+    { t: 76, lon: 105.754, lat: 10.33, hd: 300, p: -30, r: 2.2e4 },
+    { t: 80.5, lon: 105.74, lat: 10.40, hd: 330, p: -38, r: 3.2e4 },
+    { t: 85.5, lon: 105.7188, lat: 10.4766, hd: 345, p: -26, r: 1.3e4, rv: 1.15 },
     { t: 90, lon: 105.66, lat: 10.45, hd: 300, p: -60, r: 1.5e5, fov: 40 },
     { t: 95, lon: 105.645, lat: 10.49, hd: 360, p: -89.5, r: 4.6e5, fov: 18 },
     { t: 112, lon: 105.645, lat: 10.49, hd: 360, p: -89.5, r: 4.9e5, fov: 18 },
@@ -77,6 +78,7 @@ export async function setup(ctx) {
 
   const revealC = new THREE.Vector2(105.7544 - T.frame.lon0, 10.3282 - T.frame.lat0);
   const peakA = T.frame.toLocal(105.754429, 10.328224, 0);
+  const peakT = T.frame.toLocal(105.718236, 10.476623, 0);
   const stackPts = T.stacks.map(s => T.frame.toLocal(s.lon, s.lat, s.h));
   function setOvl(a, b, mix) { setOverlay(T.terr, T.frame, 'A', a); setOverlay(T.terr, T.frame, 'B', b); U.ovlMix.value = mix; }
 
@@ -103,13 +105,10 @@ export async function setup(ctx) {
         labels = []; lblA = 0;
       } else if (t < 64) { const m = smooth(range01(t, 58.3, 59.8)); setOvl(ovA, ovAabs, m); labels = m < 0.5 ? ovA.labels : ovAabs.labels; lblA = Math.abs(m - 0.5) * 2; }
       else if (t < 71.5) { const m = smooth(range01(t, 64.5, 66)); setOvl(ovAabs, ovAabsS, m); labels = ovAabs.labels; lblA = 1 - m; }
-      else { const m = smooth(range01(t, 71.5, 73)); setOvl(ovAabsS, ovA, m); labels = ovA.labels; lblA = smooth(range01(t, 72.5, 73.5)) * (1 - smooth(range01(t, 74, 75.5))) + smooth(range01(t, 92, 94)) * (1 - smooth(range01(t, 96, 97))); }
+      else if (t < 79.5) { const m = smooth(range01(t, 71.5, 73.5)); setOvl(ovAabsS, ovSO2, m); labels = ovSO2.labels; lblA = smooth(range01(t, 73, 74)); }
+      else if (t < 88) { const m = smooth(range01(t, 79.5, 81.5)); setOvl(ovSO2, ovTSP, m); labels = m < 0.5 ? ovSO2.labels : ovTSP.labels; lblA = Math.abs(m - 0.5) * 2; }
+      else { const m = smooth(range01(t, 88, 90)); setOvl(ovTSP, ovA, m); labels = m < 0.5 ? ovTSP.labels : ovA.labels; lblA = Math.abs(m - 0.5) * 2 * (1 - smooth(range01(t, 96, 97))); }
       if (split >= 0) U.ovlSplit.value = Math.max(0, split);
-      // columns + exaggeration + 2D
-      const grow = smooth(range01(t, 72.5, 77.5)) * (1 - smooth(range01(t, 88, 91)));
-      const exag = 1 + 5 * smoother(range01(t, 79.5, 86.5));
-      cols.set(grow, 2600, exag);
-      U.ovlAlpha.value *= 1 - 0.4 * grow;
       // gallery dims the map
       const dim = smooth(range01(t, 96, 98)) * (1 - smooth(range01(t, 111, 113)));
       for (const m of [T.terr.mat, T.ctxPatch.mat, globe.mat]) m.uniforms.exposure.value = 1 - 0.62 * dim;
@@ -145,7 +144,7 @@ export async function setup(ctx) {
           g.rotation.set((i - 1) * 0.12, Math.sin(t * 0.4 + i) * 0.08, 0);
         }
       });
-      return { camH: cc.h, labels, lblA: lblA * U.ovlOn.value, split, grow, exag, dim };
+      return { camH: cc.h, labels, lblA: lblA * U.ovlOn.value, split, dim };
     },
     draw(t, o, st) {
       const u = o.u, Wd = o.w, Ht = o.h, W_ = C.warn, M_ = C.muted, I_ = C.ink;
@@ -214,19 +213,16 @@ export async function setup(ctx) {
       }
       cap({ kicker: 'Tùy chọn hiển thị', title: 'Thang màu & kiểu tô', body: ['% QCVN hoặc µg/m³ (thang log)', 'Tô theo dải hoặc mờ dần'] }, 57.4, 71);
       const l2 = win(t, 58.8, 72.2, 0.6, 0.6); if (l2.on) o.legend({ x: lgX, y: lgY, w: lgW, p: l2.p, q: l2.q, mode: 'abs', vmin: LA.vmin, vmax: LA.vmax, levels: [0.1, 1, 10, 100], title: 'NO₂ (µg/m³)' });
-      // ---------- 72–96: columns, exaggeration, 2D ----------
+      // ---------- 72–96: other pollutants, then 2D ----------
       const l3 = win(t, 72.2, 95.5, 0.6, 0.6); if (l3.on) o.legend({ x: lgX, y: lgY, w: lgW, p: l3.p, q: l3.q });
-      cap({ kicker: 'Chế độ cột 3D', title: 'NO₂ · Cột theo nồng độ', body: [[['Phóng đại chiều cao  ', M_], [`×${fmtVN(st.exag || 1, 1)}`, C.warn, 1]], 'Màu theo % QCVN · cực đại 1 giờ'] }, 73, 88.6);
-      const ew = win(t, 79.5, 88.4, 0.6, 0.5);
-      if (ew.on) {
-        const a = smooth(ew.p) * (1 - smooth(ew.q)), x = vertical ? 50 * u : Wd - 560 * u, y = vertical ? Ht * 0.665 : 92 * u, w = vertical ? Wd - 100 * u : 490 * u;
-        o.panel(x, y, w, 70 * u, a, 12);
-        o.text('PHÓNG ĐẠI CỘT 3D', x + 20 * u, y + 28 * u, { weight: 600, size: 13, color: C.faint, spacing: 1.6, alpha: a });
-        o.text(`×${fmtVN(st.exag || 1, 1)}`, x + w - 20 * u, y + 28 * u, { weight: 600, size: 16, fam: '"IBM Plex Mono", monospace', color: C.accent, align: 'right', alpha: a });
-        const g = o.g, sx0 = x + 20 * u, sw0 = w - 40 * u, f = ((st.exag || 1) - 1) / 7;
-        g.save(); g.globalAlpha = a; g.fillStyle = 'rgba(140,170,195,0.3)'; g.fillRect(sx0, y + 46 * u, sw0, 4 * u); g.fillStyle = C.accent; g.fillRect(sx0, y + 46 * u, sw0 * f, 4 * u);
-        g.beginPath(); g.arc(sx0 + sw0 * f, y + 48 * u, 9 * u, 0, Math.PI * 2); g.fill(); g.restore();
-      }
+      const pw2 = win(t, 72.5, 88.6, 0.7, 0.5);
+      if (pw2.on) o.seg({ label: 'Chất', items: ['TSP', 'SO₂', 'NO₂'], active: 2 - smooth(range01(t, 71.5, 73.5)) - smooth(range01(t, 79.5, 81.5)), x: vertical ? 50 * u : Wd - 560 * u, y: vertical ? Ht * 0.665 : 92 * u, w: vertical ? Wd - 100 * u : 290 * u, p: pw2.p, q: pw2.q });
+      cap({ kicker: 'Đổi chất ô nhiễm', title: 'SO₂ · Cực đại 1 giờ', body: [[['Đỉnh mô phỏng  ', M_], ['522,6 µg/m³', W_, 1]], [['QCVN (1 giờ)  ', M_], ['350 µg/m³', I_, 1]]] }, 73, 79.3);
+      cap({ kicker: 'Đổi chất ô nhiễm', title: 'TSP · Cực đại 1 giờ', body: [[['Đỉnh mô phỏng  ', M_], ['372,4 µg/m³', W_, 1]], [['QCVN (1 giờ)  ', M_], ['300 µg/m³', I_, 1]]] }, 81, 88.6);
+      const q1 = win(t, 74.5, 79.3, 0.7, 0.5);
+      if (q1.on) { const p = project(ctx, T.frame, peakA); if (p.vis) o.pin(p.x, p.y, 'Đỉnh SO₂ · 522,6 µg/m³', 'cụm nguồn thải Sa Đéc', { a: smooth(q1.p) * (1 - smooth(q1.q)), ox: vertical ? -40 : 80, oy: -110, color: C.bad }); }
+      const q2 = win(t, 83.6, 88.4, 0.7, 0.5);
+      if (q2.on) { const p = project(ctx, T.frame, peakT); if (p.vis) o.pin(p.x, p.y, 'Đỉnh TSP · 372,4 µg/m³', 'cực đại 1 giờ · kịch bản 1', { a: smooth(q2.p) * (1 - smooth(q2.q)), ox: vertical ? -40 : 80, oy: -110, color: C.bad }); }
       const mw = win(t, 89.5, 96.2, 0.6, 0.5);
       if (mw.on) o.seg({ label: 'Chế độ hiển thị', items: ['3D địa hình', '2D bản đồ'], active: smooth(range01(t, 90.8, 91.8)), x: vertical ? 50 * u : Wd - 560 * u, y: vertical ? Ht * 0.665 : 92 * u, w: vertical ? Wd - 100 * u : 490 * u, p: mw.p, q: mw.q });
       cap({ kicker: 'Chế độ 2D', title: 'Bản đồ 2D', body: ['Chuyển qua lại 3D ↔ 2D', 'NO₂ · cực đại 1 giờ · % QCVN'] }, 89.8, 95.8);
